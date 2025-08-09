@@ -2,7 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import { motion } from "framer-motion";
 
-
+import HomePage from "./pages/HomePage";
 import Navbar from "./features/formBuilder/components/Navbar";
 import Footer from "./features/formBuilder/components/Footer";
 import {Toaster} from 'sonner'
@@ -22,9 +22,11 @@ export default function App() {
         className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full"
       >
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/create" element={<CreateFormPage />} />
           <Route path="/preview" element={<PreviewFormPage />} />
           <Route path="/myforms" element={<MyFormsPage />} />
+          
           {/* Add a 404 or redirect route here if needed */}
         </Routes>
       </motion.main>

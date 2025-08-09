@@ -53,10 +53,7 @@ export default function MyFormsPage() {
         fontWeight="bold"
         gutterBottom
         sx={{
-          background: "linear-gradient(90deg, #fc00ff, #00dbde)",
-          
-// 
-
+          background: "linear-gradient(90deg,rgb(93, 237, 98),rgb(7, 24, 6))", // green gradient theme
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           fontWeight: 700,
@@ -73,9 +70,9 @@ export default function MyFormsPage() {
           py={12}
           borderRadius={3}
           sx={{
-            background: "linear-gradient(135deg, #43cea2, #185a9d)",
+            background: "linear-gradient(135deg, #a4d4a5, #2e7d32)", // lighter to dark green gradient
             color: "white",
-            boxShadow: "0 10px 20px rgba(24, 90, 157, 0.5)",
+            boxShadow: "0 10px 20px rgba(46, 125, 50, 0.5)", // green shadow
           }}
         >
           <Typography variant="h6" fontWeight="medium" sx={{ userSelect: "none" }}>
@@ -102,7 +99,7 @@ export default function MyFormsPage() {
                   boxShadow: "0 3px 6px rgba(0,0,0,0.1)",
                   transition: "box-shadow 0.3s ease",
                   "&:hover": {
-                    boxShadow: "0 8px 20px rgba(2, 255, 175, 0.3)",
+                    boxShadow: "0 8px 20px rgba(46, 125, 50, 0.3)", // greenish glow
                   },
                 }}
               >
@@ -113,7 +110,7 @@ export default function MyFormsPage() {
                     fontWeight="700"
                     gutterBottom
                     sx={{
-                      background: "linear-gradient(45deg, #f11712, #0099f7)",
+                      background: "linear-gradient(45deg,rgb(13, 32, 14), #60ad5e)", // green text gradient
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       userSelect: "none",
@@ -138,13 +135,13 @@ export default function MyFormsPage() {
                       aria-label="preview form"
                       sx={{
                         background:
-                          "linear-gradient(135deg, #fc00ff, #00dbde)",
+                          "linear-gradient(135deg, #2e7d32, #60ad5e)", // green button gradient
                         color: "white",
                         "&:hover": {
                           background:
-                            "linear-gradient(135deg, #00dbde, #fc00ff)",
+                            "linear-gradient(135deg, #60ad5e, #2e7d32)",
                         },
-                        boxShadow: "0 4px 8px rgba(252, 0, 255, 0.6)",
+                        boxShadow: "0 4px 8px rgba(46, 125, 50, 0.6)",
                       }}
                     >
                       <VisibilityIcon />
@@ -157,13 +154,13 @@ export default function MyFormsPage() {
                     onClick={() => confirmDelete(f.id)}
                     sx={{
                       background:
-                        "linear-gradient(135deg, #43cea2, #185a9d)",
+                        "linear-gradient(135deg, #a4d4a5, #2e7d32)", // lighter green gradient for delete
                       color: "white",
                       "&:hover": {
                         background:
-                          "linear-gradient(135deg, #185a9d, #43cea2)",
+                          "linear-gradient(135deg, #2e7d32, #a4d4a5)",
                       },
-                      boxShadow: "0 4px 8px rgba(24, 90, 157, 0.6)",
+                      boxShadow: "0 4px 8px rgba(46, 125, 50, 0.6)",
                     }}
                   >
                     <DeleteIcon />
@@ -185,9 +182,9 @@ export default function MyFormsPage() {
           sx: {
             borderRadius: 3,
             background:
-              "linear-gradient(135deg, #fc00ff, #00dbde, #43cea2, #185a9d)",
+              "linear-gradient(135deg, #2e7d32, #60ad5e, #a4d4a5)", // greenish gradient background
             color: "white",
-            boxShadow: "0 10px 25px rgba(0, 219, 222, 0.8)",
+            boxShadow: "0 10px 25px rgba(46, 125, 50, 0.8)",
           },
         }}
       >
@@ -206,7 +203,7 @@ export default function MyFormsPage() {
             sx={{
               color: "white",
               borderColor: "white",
-              "&:hover": { borderColor: "#00dbde", color: "#00dbde" },
+              "&:hover": { borderColor: "#60ad5e", color: "#60ad5e" },
             }}
           >
             Cancel
@@ -216,9 +213,9 @@ export default function MyFormsPage() {
             variant="contained"
             sx={{
               background:
-                "linear-gradient(135deg, #43cea2, #185a9d)",
+                "linear-gradient(135deg, #60ad5e, #2e7d32)",
               "&:hover": {
-                background: "linear-gradient(135deg, #185a9d, #43cea2)",
+                background: "linear-gradient(135deg, #2e7d32, #60ad5e)",
               },
             }}
             autoFocus
