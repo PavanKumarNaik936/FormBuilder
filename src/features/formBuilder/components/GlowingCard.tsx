@@ -9,15 +9,14 @@ export default function GlowingCard({ children }: { children: React.ReactNode })
         backgroundColor: "white",
         padding: 1,
         zIndex: 0,
-        width: "100%",          // <-- add this
-        maxWidth: 650, 
+        width: "100%",
+        maxWidth: 650,
 
-        // Multi-layered box shadow with your gradient colors
+        // Multi-layered box shadow with green-themed glow
         boxShadow: `
-          0 0 8px 2px rgba(252, 0, 255, 0.8),    /* #fc00ff */
-       
-          0 0 16px 6px rgba(67, 206, 162, 0.5),  /* #43cea2 */
-          0 0 20px 8px rgba(59, 134, 209, 0.5)    /* #185a9d */
+          0 0 8px 2px rgba(46, 125, 50, 0.8),    /* #2e7d32 dark green */
+          0 0 16px 6px rgba(96, 173, 94, 0.5),   /* #60ad5e lighter green */
+          0 0 20px 8px rgba(164, 212, 165, 0.5)  /* #a4d4a5 pale green */
         `,
 
         "&::before": {
@@ -28,10 +27,11 @@ export default function GlowingCard({ children }: { children: React.ReactNode })
           right: -0.5,
           bottom: -0.5,
           borderRadius: 1,
-          padding: 0.3,//
+          padding: 0.3,
 
           background:
-            "linear-gradient(270deg,rgb(243, 71, 246),rgb(74, 220, 222), #185a9d,#fcb045)",
+            "linear-gradient(270deg,rgb(12, 56, 14),rgb(3, 43, 1),rgb(190, 230, 190),rgb(57, 123, 54))",
+
           backgroundSize: "400% 400%",
           animation: "glowMove 12s linear infinite",
           WebkitMask:

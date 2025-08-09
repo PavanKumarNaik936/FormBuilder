@@ -21,6 +21,15 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 
+const lightestGreen = "#f7fcf7"; // page bg
+const lighterGreen = "#e6f4e6";  // input bg
+const lightGreenBorder = "#a8d5a8"; // border color
+const mediumGreenText = "#4a7c4a"; // text
+// const mediumGreenBorder = "#9ccc9c"; // border (slightly darker)
+const darkGreenBtn = "#388e3c"; // button bg
+const darkGreenBtnHover = "#2e7d32"; // button hover
+const disabledGreen = "#d4e8d4"; // disabled button bg
+
 // Helper functions used inside formulas
 const computeAge = (dob: string | null) => {
   if (!dob) return null;
@@ -207,7 +216,34 @@ export default function PreviewFormPage() {
     const fieldValue = combinedValues[f.label] ?? "";
     const errorMsg = errors[f.label] || "";
     const hasError = errorMsg !== "";
-
+  
+    const commonTextFieldSx = {
+      backgroundColor: lighterGreen,
+      borderRadius: 1,
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: hasError ? "#d32f2f" : lightGreenBorder,
+        },
+        "&:hover fieldset": {
+          borderColor: hasError ? "#d32f2f" : mediumGreenText,
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: hasError ? "#d32f2f" : darkGreenBtn,
+          borderWidth: 2,
+        },
+        color: mediumGreenText,
+      },
+      "& .MuiInputLabel-root": {
+        color: mediumGreenText,
+        "&.Mui-focused": {
+          color: darkGreenBtn,
+        },
+      },
+      "& .MuiFormHelperText-root": {
+        color: hasError ? "#d32f2f" : mediumGreenText,
+      },
+    };
+  
     switch (f.type) {
       case "textarea":
         return (
@@ -223,10 +259,10 @@ export default function PreviewFormPage() {
             disabled={isDerived}
             error={hasError}
             helperText={errorMsg}
-            className="bg-white rounded-md shadow-sm hover:shadow-md transition-all"
+            sx={commonTextFieldSx}
           />
         );
-
+  
       case "select":
         return (
           <TextField
@@ -240,23 +276,22 @@ export default function PreviewFormPage() {
             disabled={isDerived}
             error={hasError}
             helperText={errorMsg}
-            className="bg-white rounded-md shadow-sm hover:shadow-md transition-all"
+            sx={commonTextFieldSx}
           >
             {(f.options || []).map((opt: string, idx: number) => (
-              <MenuItem key={idx} value={opt}>
+              <MenuItem key={idx} value={opt} sx={{ color: mediumGreenText }}>
                 {opt}
               </MenuItem>
             ))}
           </TextField>
         );
-
+  
       case "checkbox":
         return (
           <FormGroup sx={{ flexDirection: "row", gap: 2 }}>
             <FormLabel
               component="legend"
-              className="mb-1 font-semibold text-gray-700"
-              sx={{ width: "100%" }}
+              sx={{ width: "100%", mb: 1, fontWeight: "600", color: mediumGreenText }}
             >
               {f.label}
             </FormLabel>
@@ -278,18 +313,29 @@ export default function PreviewFormPage() {
                             : current.filter((o: string) => o !== opt),
                         };
                       });
-
-                      // Validate after updating checkbox value
+  
                       const newValue = e.target.checked
                         ? [...(fieldValue || []), opt]
                         : (fieldValue || []).filter((o: string) => o !== opt);
                       const errorMsg = validateField(f, newValue);
                       setErrors((prev) => ({ ...prev, [f.label]: errorMsg }));
                     }}
+                    sx={{
+                      color: darkGreenBtn,
+                      "&.Mui-checked": {
+                        color: darkGreenBtn,
+                      },
+                      "&.Mui-disabled": {
+                        color: disabledGreen,
+                      },
+                    }}
+                    disabled={isDerived}
                   />
                 }
                 label={opt}
-                sx={{ "& .MuiFormControlLabel-label": { fontSize: "0.95rem", color: "#444" } }}
+                sx={{
+                  "& .MuiFormControlLabel-label": { fontSize: "0.95rem", color: mediumGreenText },
+                }}
               />
             ))}
             {hasError && (
@@ -299,14 +345,13 @@ export default function PreviewFormPage() {
             )}
           </FormGroup>
         );
-
+  
       case "radio":
         return (
           <Box>
             <FormLabel
               component="legend"
-              className="mb-1 font-semibold text-gray-700"
-              sx={{ mb: 1 }}
+              sx={{ mb: 1, fontWeight: "600", color: mediumGreenText }}
             >
               {f.label}
             </FormLabel>
@@ -322,9 +367,22 @@ export default function PreviewFormPage() {
                 <FormControlLabel
                   key={idx}
                   value={opt}
-                  control={<Radio />}
+                  control={
+                    <Radio
+                      sx={{
+                        color: darkGreenBtn,
+                        "&.Mui-checked": {
+                          color: darkGreenBtn,
+                        },
+                        "&.Mui-disabled": {
+                          color: disabledGreen,
+                        },
+                      }}
+                      disabled={isDerived}
+                    />
+                  }
                   label={opt}
-                  sx={{ "& .MuiFormControlLabel-label": { fontSize: "0.95rem", color: "#444" } }}
+                  sx={{ "& .MuiFormControlLabel-label": { fontSize: "0.95rem", color: mediumGreenText } }}
                 />
               ))}
             </RadioGroup>
@@ -335,7 +393,7 @@ export default function PreviewFormPage() {
             )}
           </Box>
         );
-
+  
       default:
         if (f.type === "date") {
           return (
@@ -350,8 +408,8 @@ export default function PreviewFormPage() {
               disabled={isDerived}
               error={hasError}
               helperText={errorMsg}
-              className="bg-white rounded-md shadow-sm hover:shadow-md transition-all"
               InputLabelProps={{ shrink: true }}
+              sx={commonTextFieldSx}
             />
           );
         }
@@ -367,11 +425,12 @@ export default function PreviewFormPage() {
             disabled={isDerived}
             error={hasError}
             helperText={errorMsg}
-            className="bg-white rounded-md shadow-sm hover:shadow-md transition-all"
+            sx={commonTextFieldSx}
           />
         );
     }
   };
+  
 
   const handleSubmit = () => {
     if (!form) return;
@@ -393,60 +452,99 @@ export default function PreviewFormPage() {
   };
 
   return (
-    <Box className="flex justify-center  bg-gradient-to-br from-gray-50 to-blue-50 p-2" >
+    <Box
+      className="flex justify-center p-2"
+      sx={{
+        background: `linear-gradient(to bottom right, ${lightestGreen}, ${lighterGreen})`,
+        minHeight: "100vh",
+      }}
+    >
       <GlowingCard>
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        style={{ maxWidth: 650, width: "100%" }}
-      >
-        <Paper
-          elevation={3}
-          className="w-full p-6 rounded-2xl shadow-lg backdrop-blur-md bg-white/95 border border-gray-200"
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          style={{ maxWidth: 650, width: "100%" }}
         >
-          <Typography variant="h5" className="mb-6 font-semibold text-center text-gray-900">
-            {form.name}
-          </Typography>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 6,
+              borderRadius: 4,
+              boxShadow:
+                "0 10px 30px rgba(72,187,120,0.2)",
+              backdropFilter: "blur(12px)",
+              backgroundColor: "rgba(255 255 255 / 0.95)",
+              border: `1.5px solid ${lightGreenBorder}`,
+              color: mediumGreenText,
+            }}
+          >
+            <Typography
+              variant="h5"
+              className="mb-6 font-semibold text-center"
+              sx={{ color: mediumGreenText }}
+            >
+              {form.name}
+            </Typography>
 
-          <Box component="form" noValidate autoComplete="off" sx={{ gap: 3 }}>
-            <div className="space-y-5">
-              {form.fields.map((f) => (
-                <motion.div
-                  key={f.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.25 }}
-                >
-                  {renderField(f)}
-                </motion.div>
-              ))}
-            </div>
+            <Box
+              component="form"
+              noValidate
+              autoComplete="off"
+              sx={{ gap: 3 }}
+            >
+              <div className="space-y-5">
+                {form.fields.map((f) => (
+                  <motion.div
+                    key={f.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    {renderField(f)}
+                  </motion.div>
+                ))}
+              </div>
 
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }}>
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                size="medium"
-                sx={{
-                  mt: 6,
-                  borderRadius: 2,
-                  textTransform: "none",
-                  fontWeight: 600,
-                  boxShadow: "0 4px 10px rgb(0 123 255 / 0.4), 0 0 15px rgb(0 123 255 / 0.2)",
-                }}
-                onClick={handleSubmit}
-                disabled={!isFormValid()}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.25 }}
               >
-                Submit
-              </Button>
-            </motion.div>
-            
-          </Box>
-        </Paper>
-        
-      </motion.div>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  size="medium"
+                  onClick={handleSubmit}
+                  disabled={!isFormValid()}
+                  sx={{
+                    mt: 6,
+                    borderRadius: 2,
+                    textTransform: "none",
+                    fontWeight: 600,
+                    backgroundColor: darkGreenBtn,
+                    boxShadow:
+                      "0 4px 10px rgba(56,142,60,0.4), 0 0 15px rgba(56,142,60,0.2)",
+                    "&:hover": {
+                      backgroundColor: darkGreenBtnHover,
+                      boxShadow:
+                        "0 6px 14px rgba(46,125,50,0.6), 0 0 20px rgba(46,125,50,0.3)",
+                    },
+                    "&:disabled": {
+                      backgroundColor: disabledGreen,
+                      boxShadow: "none",
+                      color: mediumGreenText,
+                      cursor: "not-allowed",
+                      opacity: 0.7,
+                    },
+                  }}
+                >
+                  Submit
+                </Button>
+              </motion.div>
+            </Box>
+          </Paper>
+        </motion.div>
       </GlowingCard>
     </Box>
   );
