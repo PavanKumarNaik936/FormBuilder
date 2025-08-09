@@ -1,69 +1,142 @@
-# React + TypeScript + Vite
+# React + Redux Form Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dynamic form builder application built with React, TypeScript, Material-UI (MUI), Redux Toolkit, and localStorage. Users can create customizable forms with validations, preview forms as end users, and manage saved forms — all without a backend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
 
-## Expanding the ESLint configuration
+- [Project Overview](#project-overview)  
+- [Features](#features)  
+- [Tech Stack](#tech-stack)  
+- [Getting Started](#getting-started)  
+- [Project Structure & Routes](#project-structure--routes)  
+- [Usage](#usage)  
+- [Future Improvements](#future-improvements)  
+- [License](#license)  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Project Overview
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+This project enables users to build forms dynamically by adding various types of fields with custom validation rules and derived fields based on formulas. Users can preview their forms to simulate end-user interaction and view/manage all saved forms stored in localStorage.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Dynamic Form Creation
+- Add, configure, reorder, and delete form fields of types:  
+  Text, Number, Textarea, Select, Radio, Checkbox, Date
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Field Configuration
+- Set label, required flag, default value  
+- Validation rules: required, min/max length, email format, custom password rules
+
+### Derived Fields
+- Compute field values based on other fields using user-defined formulas  
+- Example: Calculate age from date of birth
+
+### Form Preview
+- Render the form as end users will see it  
+- Real-time validation and error messages  
+- Auto-updating derived fields
+
+### Form Management
+- Save forms with a custom name  
+- Persist all form schemas in localStorage  
+- View a list of saved forms with creation date  
+- Open any saved form in preview mode
+
+---
+
+## Tech Stack
+
+- React (with TypeScript)  
+- Redux Toolkit (for state management)  
+- Material-UI (MUI) for UI components  
+- React Router DOM for routing  
+- Framer Motion for animations  
+- Sonner for toast notifications  
+- localStorage for persistent form data (no backend)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16+)  
+- npm or yarn  
+
+### Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/yourusername/react-redux-form-builder.git
+    cd react-redux-form-builder
+    ```
+
+2. Install dependencies:
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+3. Start the development server:
+
+    ```bash
+    npm run dev
+    # or
+    yarn dev
+    ```
+
+4. Open your browser and go to [http://localhost:3000](http://localhost:3000) to see the app running.
+
+---
+
+## Project Structure & Routes
+
+| Route      | Description                         |
+|------------|-----------------------------------|
+| `/create`  | Build and configure dynamic forms |
+| `/preview` | Preview the created form with validation |
+| `/myforms` | List all saved forms and access previews |
+
+---
+
+## Usage
+
+### Create Form (`/create`)
+
+- Add various field types.  
+- Configure labels, defaults, validations.  
+- Set derived fields with formulas referencing other fields.  
+- Save your form by entering a form name; it will be stored in localStorage.
+
+### Preview Form (`/preview`)
+
+- Interact with the form like an end user.  
+- Input validation and error feedback occur in real-time.  
+- Derived fields automatically update as inputs change.
+
+### My Forms (`/myforms`)
+
+- View a list of all saved forms with their creation dates.  
+- Click on a form to open its preview page.
+
+---
+
+## Future Improvements
+
+- Add form export/import functionality (JSON)  
+- Enhance formula editor with syntax highlighting and error detection  
+- Add user authentication and backend persistence  
+- Provide form submission endpoints and integrate with APIs  
+- Improve UI responsiveness and accessibility
+
+
+
