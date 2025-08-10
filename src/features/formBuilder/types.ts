@@ -8,19 +8,22 @@ export type FieldType =
   | 'date'
   
 
-export interface ValidationRules {
-  required?: boolean;
-  minLength?: number;
-  maxLength?: number;
-  email?: boolean;
-  passwordRule?: boolean; // e.g. min 8 chars + number
-}
+ export  interface ValidationRules {
+    required?: boolean;
+    minLength?: number;
+    maxLength?: number;
+    minValue?: number;
+    maxValue?: number;
+    email?: boolean;
+    password?: boolean;
+  }
+  
 
 export interface Field {
   id: string;
   type: FieldType;
   label: string;
-  required?: boolean;   // you can keep or move into validations.required
+  // required?: boolean;   // you can keep or move into validations.required
   defaultValue?: any;
   options?: string[];   // For select, radio, checkbox
   validations?: ValidationRules;  // New validations object

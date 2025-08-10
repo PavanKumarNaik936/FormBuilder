@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { type RootState } from "../app/store";
+import {type ValidationRules } from "../features/formBuilder/types";
 import {
   addField,
   removeField,
@@ -24,15 +25,6 @@ const validationOptionsByType = {
   date: ["notEmpty"],
 };
 
-interface ValidationRules {
-  notEmpty?: boolean;
-  minLength?: number;
-  maxLength?: number;
-  minValue?: number;
-  maxValue?: number;
-  email?: boolean;
-  password?: boolean;
-}
 
 const lightGreen = "#a5d6a7";  // lighter green background/focus
 const darkGreen = "#2e7d32";   // dark green for text and gradients
@@ -46,7 +38,7 @@ export default function CreateFormPage() {
   const [type, setType] = useState<FieldType>("text");
   const [label, setLabel] = useState("");
   const [options, setOptions] = useState(""); // comma separated options
-  const [required, setRequired] = useState(false);
+  // const [required, setRequired] = useState(false);
   const [defaultValue, setDefaultValue] = useState<string>("");
   const [validationRules, setValidationRules] = useState<ValidationRules>({});
   const [isDerived, setIsDerived] = useState(false);
@@ -103,7 +95,7 @@ export default function CreateFormPage() {
           type,
           label,
           options: optsArray,
-          required,
+          // required,
           defaultValue,
           validations: validationRules,
           derivedFrom: isDerived ? derivedParents : undefined,
@@ -115,7 +107,7 @@ export default function CreateFormPage() {
         addField({
           type,
           label,
-          required,
+          // required,
           defaultValue,
           validations: validationRules,
           derivedFrom: isDerived ? derivedParents : undefined,
@@ -127,7 +119,7 @@ export default function CreateFormPage() {
     // Reset inputs
     setLabel("");
     setOptions("");
-    setRequired(false);
+    // setRequired(false);
     setDefaultValue("");
     setValidationRules({});
     setIsDerived(false);
@@ -144,6 +136,7 @@ export default function CreateFormPage() {
 
   const renderValidationInputs = () => {
     const applicableValidations = validationOptionsByType[type] || [];
+    // console.log(applicableValidations);
 
     return (
       <div
@@ -160,9 +153,9 @@ export default function CreateFormPage() {
           >
             <input
               type="checkbox"
-              checked={validationRules.notEmpty || false}
+              checked={validationRules.required || false}
               onChange={(e) =>
-                handleValidationChange("notEmpty", e.target.checked)
+                handleValidationChange("required", e.target.checked)
               }
               className="form-checkbox h-4 w-4"
               style={{ accentColor: darkGreen }}
@@ -401,7 +394,7 @@ export default function CreateFormPage() {
             </div>
   
             {/* Required toggle */}
-            <label className="flex items-center gap-3 mb-4" style={{ color: mediumGreenText }}>
+            {/* <label className="flex items-center gap-3 mb-4" style={{ color: mediumGreenText }}>
               <input
                 type="checkbox"
                 checked={required}
@@ -410,7 +403,7 @@ export default function CreateFormPage() {
                 style={{ accentColor: darkGreenBtn }}
               />
               <span className="select-none font-semibold">Required</span>
-            </label>
+            </label> */}
   
             {/* Validation rules */}
             {renderValidationInputs()}
@@ -481,7 +474,7 @@ export default function CreateFormPage() {
                         <span className="text-sm italic" style={{ color: mediumGreenText }}>
                           ({f.type})
                         </span>
-                        {f.required && (
+                        {f.validations?.required && (
                           <p className="font-semibold text-sm mt-1" style={{ color: darkGreenBtn }}>
                             Required
                           </p>
