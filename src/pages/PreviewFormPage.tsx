@@ -64,7 +64,7 @@ export default function PreviewFormPage() {
     const val = value ?? "";
 
     // Required check (consolidate with validations.required)
-    const isRequired = v.required ?? field.required ?? false;
+    const isRequired = v.required ?? field.validations?.required ?? false;
     if (isRequired) {
       if (
         val === "" ||
@@ -95,7 +95,7 @@ export default function PreviewFormPage() {
     }
 
     // Password rule validation (example: min 8 chars, at least 1 digit)
-    if (v.passwordRule && typeof val === "string" && val) {
+    if (v.password && typeof val === "string" && val) {
       const passwordRegex = /^(?=.*\d).{8,}$/;
       if (!passwordRegex.test(val)) {
         return "Password must be at least 8 characters and include a number";
